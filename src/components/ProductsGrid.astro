@@ -35,21 +35,16 @@ import { products, categories } from '../data/products.js';
             {p.badge && (
               <span class={`product-badge badge-${(p.badge || '').toLowerCase().replace(' ', '-')}`}>
                 {p.badge}
-                {p.originalPrice && (
-                  `-${Math.round((1 - p.price / p.originalPrice) * 100)}%`
-                )}
               </span>
             )}
-            <button
+            <a
               class="product-add-btn"
-              data-add-to-cart
-              data-id={p.id}
-              data-name={p.name}
-              data-price={p.price}
-              data-img={p.img}
+              href={`https://wa.me/573001234567?text=Hola, me interesa el producto: ${encodeURIComponent(p.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Añadir
-            </button>
+              Cotizar
+            </a>
           </div>
 
           <div class="product-info">
@@ -58,12 +53,6 @@ import { products, categories } from '../data/products.js';
             <div class="product-rating">
               <span class="stars">{'★'.repeat(Math.round(p.rating))}</span>
               <span class="rating-count">({p.reviews})</span>
-            </div>
-            <div class="product-price">
-              <span class="price-current">${p.price}</span>
-              {p.originalPrice && (
-                <span class="price-original">${p.originalPrice}</span>
-              )}
             </div>
           </div>
         </article>
@@ -197,6 +186,8 @@ import { products, categories } from '../data/products.js';
     white-space: nowrap;
     font-family: var(--font-body);
     z-index: 2;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .product-card:hover .product-add-btn {
