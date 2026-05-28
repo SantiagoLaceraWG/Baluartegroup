@@ -1,0 +1,346 @@
+---
+import { products, categories } from '../data/products.js';
+---
+
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="section-header">
+      <h2>Nuestros Productos</h2>
+      <p>Explora nuestra amplia selección de productos de alta calidad para todas tus necesidades</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="filter-tabs">
+      {categories.map((cat, i) => (
+        <button
+          class={`filter-tab ${i === 0 ? 'active' : ''}`}
+          data-filter={cat.name}
+        >
+          {cat.name}
+          <span class="filter-count">({cat.count})</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="products-grid">
+      {products.map(p => (
+        <article
+          class="product-card"
+          data-category={p.category}
+          data-id={p.id}
+        >
+          <div class="product-img">
+            <img src={p.img} alt={p.name} loading="lazy" />
+            {p.badge && (
+              <span class={`product-badge badge-${(p.badge || '').toLowerCase().replace(' ', '-')}`}>
+                {p.badge}
+                {p.originalPrice && (
+                  `-${Math.round((1 - p.price / p.originalPrice) * 100)}%`
+                )}
+              </span>
+            )}
+            <button
+              class="product-add-btn"
+              data-add-to-cart
+              data-id={p.id}
+              data-name={p.name}
+              data-price={p.price}
+              data-img={p.img}
+            >
+              Añadir
+            </button>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">{p.category}</span>
+            <h3 class="product-name">{p.name}</h3>
+            <div class="product-rating">
+              <span class="stars">{'★'.repeat(Math.round(p.rating))}</span>
+              <span class="rating-count">({p.reviews})</span>
+            </div>
+            <div class="product-price">
+              <span class="price-current">${p.price}</span>
+              {p.originalPrice && (
+                <span class="price-original">${p.originalPrice}</span>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="btn btn-outline" id="load-more">Ver Más Productos</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .products-section {
+    padding: 96px 0;
+  }
+
+  /* Filter Tabs */
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .filter-tab {
+    padding: 9px 18px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1.5px solid var(--clr-border);
+    background: var(--clr-surface);
+    color: var(--clr-muted);
+    transition: all var(--transition);
+    cursor: pointer;
+  }
+
+  .filter-tab:hover {
+    border-color: var(--clr-primary);
+    color: var(--clr-primary);
+  }
+
+  .filter-tab.active {
+    background: var(--clr-primary);
+    border-color: var(--clr-primary);
+    color: white;
+  }
+
+  .filter-count {
+    opacity: 0.7;
+    font-size: 0.78rem;
+  }
+
+  /* Products Grid */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--clr-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--clr-border);
+    transition: all var(--transition);
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .product-card.hidden { display: none; }
+
+  .product-img {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--clr-bg);
+  }
+
+  .product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .product-card:hover .product-img img {
+    transform: scale(1.08);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: white;
+    z-index: 2;
+  }
+
+  .badge-sale, .badge-sale-40 { background: var(--clr-badge-sale); }
+  .badge-new, .badge-new-23 { background: var(--clr-badge-new); }
+  .badge-best-seller, .badge-bestseller { background: var(--clr-badge-best); }
+  .badge-popular { background: var(--clr-badge-popular); }
+  .badge-premium, .badge-premium-18 { background: var(--clr-badge-premium); }
+  .badge-trending { background: var(--clr-badge-trending); }
+  .badge-limited { background: var(--clr-badge-limited); }
+  .badge-professional { background: var(--clr-badge-premium); }
+
+  .product-add-btn {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: var(--clr-primary);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    z-index: 2;
+  }
+
+  .product-card:hover .product-add-btn {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .product-add-btn:hover {
+    background: var(--clr-accent);
+  }
+
+  .product-info {
+    padding: 16px;
+  }
+
+  .product-category {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--clr-accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    color: var(--clr-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .stars {
+    color: #f59e0b;
+    font-size: 0.78rem;
+  }
+
+  .rating-count {
+    font-size: 0.75rem;
+    color: var(--clr-muted);
+  }
+
+  .product-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .product-price .price-current {
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .product-price .price-original {
+    font-size: 0.85rem;
+    color: var(--clr-muted);
+    text-decoration: line-through;
+  }
+
+  /* Load More */
+  .load-more-wrap {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 1024px) {
+    .products-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 400px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const INITIAL_VISIBLE = 12;
+  let currentFilter = 'Todos';
+  let visibleCount = INITIAL_VISIBLE;
+
+  const allCards = Array.from(document.querySelectorAll<HTMLElement>('.product-card'));
+  const tabs = document.querySelectorAll<HTMLElement>('.filter-tab');
+  const loadMoreBtn = document.getElementById('load-more');
+
+  function getFilteredCards() {
+    return allCards.filter(card => {
+      return currentFilter === 'Todos' || card.dataset.category === currentFilter;
+    });
+  }
+
+  function renderCards() {
+    const filtered = getFilteredCards();
+
+    allCards.forEach(card => {
+      const isFiltered = currentFilter === 'Todos' || card.dataset.category === currentFilter;
+      const idx = filtered.indexOf(card);
+      card.style.display = (!isFiltered || idx >= visibleCount) ? 'none' : '';
+    });
+
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display = filtered.length > visibleCount ? '' : 'none';
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentFilter = tab.dataset.filter || 'Todos';
+      visibleCount = INITIAL_VISIBLE;
+      renderCards();
+    });
+  });
+
+  loadMoreBtn?.addEventListener('click', () => {
+    visibleCount += INITIAL_VISIBLE;
+    renderCards();
+  });
+
+  // Listen for category filter events from Categories section
+  document.addEventListener('filterCategory', (e: Event) => {
+    const cat = (e as CustomEvent).detail;
+    tabs.forEach(tab => {
+      const isMatch = tab.dataset.filter === cat;
+      tab.classList.toggle('active', isMatch);
+    });
+    currentFilter = cat;
+    visibleCount = INITIAL_VISIBLE;
+    renderCards();
+  });
+
+  renderCards();
+</script>

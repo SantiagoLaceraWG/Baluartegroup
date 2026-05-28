@@ -1,0 +1,161 @@
+---
+---
+
+<section class="newsletter" id="about">
+  <div class="container newsletter-inner">
+    <div class="newsletter-content">
+      <h2>Suscríbete a Nuestro Boletín</h2>
+      <p>Recibe las últimas ofertas, novedades y descuentos exclusivos directamente en tu correo</p>
+    </div>
+    <form class="newsletter-form" id="newsletter-form">
+      <div class="input-wrap">
+        <input
+          type="email"
+          placeholder="tu@correo.com"
+          id="email-input"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Suscribirse</button>
+      </div>
+      <p class="newsletter-disclaimer">
+        Al suscribirte, aceptas recibir correos de marketing. Puedes darte de baja en cualquier momento.
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .newsletter {
+    padding: 96px 0;
+    background: var(--clr-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(200,149,106,0.15), transparent);
+    border-radius: 50%;
+  }
+
+  .newsletter::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(200,149,106,0.1), transparent);
+    border-radius: 50%;
+  }
+
+  .newsletter-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .newsletter-content {
+    flex: 1;
+    color: white;
+  }
+
+  .newsletter-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .newsletter-content p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+  }
+
+  .newsletter-form {
+    flex: 1;
+    max-width: 460px;
+  }
+
+  .input-wrap {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .input-wrap input {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: all var(--transition);
+  }
+
+  .input-wrap input::placeholder {
+    color: rgba(255,255,255,0.4);
+  }
+
+  .input-wrap input:focus {
+    border-color: var(--clr-accent);
+    background: rgba(255,255,255,0.12);
+  }
+
+  .newsletter-disclaimer {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .newsletter-form {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .input-wrap {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('newsletter-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('email-input') as HTMLInputElement;
+    const btn = (e.currentTarget as HTMLFormElement).querySelector('button');
+
+    if (btn) {
+      btn.textContent = '¡Suscrito! ✓';
+      btn.style.background = '#27ae60';
+    }
+
+    input.value = '';
+
+    setTimeout(() => {
+      if (btn) {
+        btn.textContent = 'Suscribirse';
+        btn.style.background = '';
+      }
+    }, 3000);
+  });
+</script>

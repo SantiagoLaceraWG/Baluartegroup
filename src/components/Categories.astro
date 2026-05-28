@@ -1,0 +1,136 @@
+---
+import { categoryCards } from '../data/products.js';
+---
+
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <h2>Compra por Categoría</h2>
+      <p>Encuentra exactamente lo que buscas</p>
+    </div>
+
+    <div class="categories-grid">
+      {categoryCards.map(cat => (
+        <a href="#products" class="category-card" data-category={cat.name}>
+          <div class="category-img">
+            <img src={cat.img} alt={cat.name} loading="lazy" />
+            <div class="category-overlay"></div>
+          </div>
+          <div class="category-info">
+            <h3>{cat.name}</h3>
+            <p>{cat.desc}</p>
+            <span class="category-count">{cat.count} productos</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .categories {
+    padding: 96px 0;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .category-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+    background: var(--clr-surface);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
+  }
+
+  .category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .category-img {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .category-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .category-card:hover .category-img img {
+    transform: scale(1.08);
+  }
+
+  .category-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%);
+  }
+
+  .category-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px 16px;
+    color: white;
+  }
+
+  .category-info h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .category-info p {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .category-count {
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  @media (max-width: 1024px) {
+    .categories-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 400px) {
+    .categories-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Category filter links
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = (card as HTMLElement).dataset.category || '';
+      const event = new CustomEvent('filterCategory', { detail: cat, bubbles: true });
+      document.dispatchEvent(event);
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
