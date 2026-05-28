@@ -8,7 +8,7 @@
       <span
         ><img
           class="logo-icon"
-          src="/public/Images/Icon.png"
+          src="/Images/Icon.png"
           alt="Site logo"
         /></span
       >
@@ -79,10 +79,10 @@
   </div>
   <div class="cart-footer">
     <div class="cart-total">
-      <span>Total</span>
-      <span id="cart-total">$0.00</span>
+      <span>Productos</span>
+      <span id="cart-total">0</span>
     </div>
-    <button class="btn btn-primary" style="width:100%">Proceder al Pago</button>
+    <a href="#" class="btn btn-primary" id="checkout-whatsapp" style="width:100%; text-align:center; text-decoration:none;">Cotizar por WhatsApp</a>
   </div>
 </aside>
 
@@ -331,9 +331,9 @@
     line-height: 1.3;
   }
 
-  .cart-item-price {
+  .cart-item-qty {
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--clr-accent);
   }
 
@@ -422,7 +422,6 @@
   let cart: Array<{
     id: number;
     name: string;
-    price: number;
     img: string;
     qty: number;
   }> = [];
@@ -431,12 +430,18 @@
     const cartCount = document.getElementById('cart-count');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-whatsapp') as HTMLAnchorElement;
 
     const totalQty = cart.reduce((s, i) => s + i.qty, 0);
-    const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
     if (cartCount) cartCount.textContent = String(totalQty);
-    if (cartTotal) cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+    if (cartTotal) cartTotal.textContent = String(totalQty);
+
+    // Update WhatsApp link with cart items
+    if (checkoutBtn && cart.length > 0) {
+      const productList = cart.map(i => `- ${i.name} (x${i.qty})`).join('%0A');
+      checkoutBtn.href = `https://wa.me/573001234567?text=Hola, me interesa cotizar los siguientes productos:%0A${productList}`;
+    }
 
     if (cartItems) {
       if (cart.length === 0) {
@@ -445,7 +450,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            <p>Tu carrito está vacío</p>
+            <p>Tu carrito esta vacio</p>
           </div>`;
       } else {
         cartItems.innerHTML = cart
@@ -455,7 +460,7 @@
             <img src="${item.img}" alt="${item.name}" />
             <div class="cart-item-info">
               <div class="cart-item-name">${item.name}</div>
-              <div class="cart-item-price">$${item.price.toFixed(2)} × ${item.qty}</div>
+              <div class="cart-item-qty">Cantidad: ${item.qty}</div>
               <button class="cart-item-remove" data-id="${item.id}">Eliminar</button>
             </div>
           </div>
@@ -483,14 +488,13 @@
 
     const id = Number(btn.dataset.id);
     const name = btn.dataset.name || '';
-    const price = parseFloat(btn.dataset.price || '0');
     const img = btn.dataset.img || '';
 
     const existing = cart.find((i) => i.id === id);
     if (existing) {
       existing.qty++;
     } else {
-      cart.push({ id, name, price, img, qty: 1 });
+      cart.push({ id, name, img, qty: 1 });
     }
 
     updateCartUI();
@@ -498,7 +502,7 @@
 
     // Button feedback
     const originalText = btn.textContent;
-    btn.textContent = '✓ Añadido';
+    btn.textContent = '✓ Agregado';
     btn.style.background = '#27ae60';
     setTimeout(() => {
       btn.textContent = originalText;

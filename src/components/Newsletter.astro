@@ -1,11 +1,25 @@
 ---
 ---
 
-<section class="newsletter" id="about">
+<section class="about" id="about">
+  <div class="container about-inner">
+    <div class="about-content">
+      <h2>Nosotros</h2>
+      <p>
+        En Baluarte Group nos especializamos en traer productos de alta calidad directamente desde Estados Unidos a Colombia. 
+        Trabajamos con marcas reconocidas y garantizamos la autenticidad de cada articulo. 
+        Nuestro compromiso es ofrecerte lo mejor en herramientas, deportes, belleza, cuidado del hogar y mucho mas, 
+        con la confianza de que estas adquiriendo productos originales y de primera categoria.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
   <div class="container newsletter-inner">
     <div class="newsletter-content">
-      <h2>Suscríbete a Nuestro Boletín</h2>
-      <p>Recibe las últimas ofertas, novedades y descuentos exclusivos directamente en tu correo</p>
+      <h2>Suscribete a Nuestro Boletin</h2>
+      <p>Recibe las ultimas ofertas, novedades y descuentos exclusivos directamente en tu correo</p>
     </div>
     <form class="newsletter-form" id="newsletter-form">
       <div class="input-wrap">
@@ -25,6 +39,31 @@
 </section>
 
 <style>
+  .about {
+    padding: 96px 0;
+    background: var(--clr-surface);
+  }
+
+  .about-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1e40af;
+  }
+
+  .about-content p {
+    color: var(--clr-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
   .newsletter {
     padding: 96px 0;
     background: var(--clr-primary);
