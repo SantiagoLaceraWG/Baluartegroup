@@ -6,57 +6,66 @@ import { products, categories } from '../data/products.js';
   <div class="container">
     <div class="section-header">
       <h2>Nuestros Productos</h2>
-      <p>Explora nuestra amplia selección de productos de alta calidad para todas tus necesidades</p>
+      <p>
+        Explora nuestra amplia selección de productos de alta calidad para todas
+        tus necesidades
+      </p>
     </div>
 
     <!-- Filter Tabs -->
     <div class="filter-tabs" id="filter-tabs">
-      {categories.map((cat, i) => (
-        <button
-          class={`filter-tab ${i === 0 ? 'active' : ''}`}
-          data-filter={cat.name}
-        >
-          {cat.name}
-          <span class="filter-count">({cat.count})</span>
-        </button>
-      ))}
+      {
+        categories.map((cat, i) => (
+          <button
+            class={`filter-tab ${i === 0 ? 'active' : ''}`}
+            data-filter={cat.name}
+          >
+            {cat.name}
+            <span class="filter-count">({cat.count})</span>
+          </button>
+        ))
+      }
     </div>
 
     <!-- Products Grid -->
     <div class="products-grid" id="products-grid">
-      {products.map(p => (
-        <article
-          class="product-card"
-          data-category={p.category}
-          data-id={p.id}
-        >
-          <div class="product-img">
-            <img src={p.img} alt={p.name} loading="lazy" />
-            {p.badge && (
-              <span class={`product-badge badge-${(p.badge || '').toLowerCase().replace(' ', '-')}`}>
-                {p.badge}
-              </span>
-            )}
-            <a
-              class="product-add-btn"
-              href={`https://wa.me/573001234567?text=Hola, me interesa el producto: ${encodeURIComponent(p.name)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Cotizar
-            </a>
-          </div>
-
-          <div class="product-info">
-            <span class="product-category">{p.category}</span>
-            <h3 class="product-name">{p.name}</h3>
-            <div class="product-rating">
-              <span class="stars">{'★'.repeat(Math.round(p.rating))}</span>
-              <span class="rating-count">({p.reviews})</span>
+      {
+        products.map((p) => (
+          <article
+            class="product-card"
+            data-category={p.category}
+            data-id={p.id}
+          >
+            <div class="product-img">
+              <img src={p.img} alt={p.name} loading="lazy" />
+              {p.badge && (
+                <span
+                  class={`product-badge badge-${(p.badge || '').toLowerCase().replace(' ', '-')}`}
+                >
+                  {p.badge}
+                </span>
+              )}
+              <a
+                class="product-add-btn"
+                href={`https://wa.me/16898084710?text=Hola, me interesa el producto: ${encodeURIComponent(p.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Cotizar
+              </a>
             </div>
-          </div>
-        </article>
-      ))}
+
+            <div class="product-info">
+              <span class="product-category">{p.category}</span>
+              <h3 class="product-name">{p.name}</h3>
+              <div class="product-rating">
+                <span class="stars">{'★'.repeat(Math.round(p.rating))}</span>
+                <span class="rating-count">({p.reviews})</span>
+              </div>
+            </div>
+          </article>
+        ))
+      }
     </div>
 
     <div class="load-more-wrap">
@@ -127,7 +136,9 @@ import { products, categories } from '../data/products.js';
     box-shadow: var(--shadow-lg);
   }
 
-  .product-card.hidden { display: none; }
+  .product-card.hidden {
+    display: none;
+  }
 
   .product-img {
     position: relative;
@@ -160,14 +171,34 @@ import { products, categories } from '../data/products.js';
     z-index: 2;
   }
 
-  .badge-sale, .badge-sale-40 { background: var(--clr-badge-sale); }
-  .badge-new, .badge-new-23 { background: var(--clr-badge-new); }
-  .badge-best-seller, .badge-bestseller { background: var(--clr-badge-best); }
-  .badge-popular { background: var(--clr-badge-popular); }
-  .badge-premium, .badge-premium-18 { background: var(--clr-badge-premium); }
-  .badge-trending { background: var(--clr-badge-trending); }
-  .badge-limited { background: var(--clr-badge-limited); }
-  .badge-professional { background: var(--clr-badge-premium); }
+  .badge-sale,
+  .badge-sale-40 {
+    background: var(--clr-badge-sale);
+  }
+  .badge-new,
+  .badge-new-23 {
+    background: var(--clr-badge-new);
+  }
+  .badge-best-seller,
+  .badge-bestseller {
+    background: var(--clr-badge-best);
+  }
+  .badge-popular {
+    background: var(--clr-badge-popular);
+  }
+  .badge-premium,
+  .badge-premium-18 {
+    background: var(--clr-badge-premium);
+  }
+  .badge-trending {
+    background: var(--clr-badge-trending);
+  }
+  .badge-limited {
+    background: var(--clr-badge-limited);
+  }
+  .badge-professional {
+    background: var(--clr-badge-premium);
+  }
 
   .product-add-btn {
     position: absolute;
@@ -265,15 +296,21 @@ import { products, categories } from '../data/products.js';
   }
 
   @media (max-width: 1024px) {
-    .products-grid { grid-template-columns: repeat(3, 1fr); }
+    .products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
-    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 400px) {
-    .products-grid { grid-template-columns: 1fr; }
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 
@@ -282,23 +319,28 @@ import { products, categories } from '../data/products.js';
   let currentFilter = 'Todos';
   let visibleCount = INITIAL_VISIBLE;
 
-  const allCards = Array.from(document.querySelectorAll<HTMLElement>('.product-card'));
+  const allCards = Array.from(
+    document.querySelectorAll<HTMLElement>('.product-card'),
+  );
   const tabs = document.querySelectorAll<HTMLElement>('.filter-tab');
   const loadMoreBtn = document.getElementById('load-more');
 
   function getFilteredCards() {
-    return allCards.filter(card => {
-      return currentFilter === 'Todos' || card.dataset.category === currentFilter;
+    return allCards.filter((card) => {
+      return (
+        currentFilter === 'Todos' || card.dataset.category === currentFilter
+      );
     });
   }
 
   function renderCards() {
     const filtered = getFilteredCards();
 
-    allCards.forEach(card => {
-      const isFiltered = currentFilter === 'Todos' || card.dataset.category === currentFilter;
+    allCards.forEach((card) => {
+      const isFiltered =
+        currentFilter === 'Todos' || card.dataset.category === currentFilter;
       const idx = filtered.indexOf(card);
-      card.style.display = (!isFiltered || idx >= visibleCount) ? 'none' : '';
+      card.style.display = !isFiltered || idx >= visibleCount ? 'none' : '';
     });
 
     if (loadMoreBtn) {
@@ -306,9 +348,9 @@ import { products, categories } from '../data/products.js';
     }
   }
 
-  tabs.forEach(tab => {
+  tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
+      tabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
       currentFilter = tab.dataset.filter || 'Todos';
       visibleCount = INITIAL_VISIBLE;
@@ -324,7 +366,7 @@ import { products, categories } from '../data/products.js';
   // Listen for category filter events from Categories section
   document.addEventListener('filterCategory', (e: Event) => {
     const cat = (e as CustomEvent).detail;
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
       const isMatch = tab.dataset.filter === cat;
       tab.classList.toggle('active', isMatch);
     });
